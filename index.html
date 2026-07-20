@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>João Pedro Diniz — Infrastructure Specialist · Cloud & Networking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070b16;
+    --bg2:#0b1120;
+    --panel:#0f172a;
+    --panel2:#0c1424;
+    --line:#1b2942;
+    --line2:#243busse;
+    --txt:#e8eefb;
+    --muted:#93a4c4;
+    --dim:#5c6f92;
+    --net:#3b82f6;      /* network blue */
+    --cyan:#22d3ee;     /* cloud cyan */
+    --violet:#8b5cf6;
+    --green:#34d399;
+    --red:#ff5470;      /* validate flag */
+    --redbg:rgba(255,84,112,.10);
+    --glow:rgba(34,211,238,.35);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* network canvas backdrop */
+  #net{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .glowbg{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(800px 480px at 82% -8%, rgba(59,130,246,.16), transparent 60%),
+      radial-gradient(680px 460px at 8% 6%, rgba(139,92,246,.12), transparent 60%),
+      radial-gradient(600px 400px at 50% 110%, rgba(34,211,238,.10), transparent 60%);
+  }
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 24px}
+
+  .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);background:rgba(7,11,22,.7);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:1080px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted)}
+  .brand .node{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--glow);animation:blink 1.8s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .nav{display:flex;gap:4px}
+  .nav a{font-size:12.5px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px;transition:.2s;font-weight:500}
+  .nav a:hover{color:var(--txt);background:var(--panel)}
+  .lang{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;font-family:'JetBrains Mono',monospace}
+  .lang button{background:transparent;border:0;color:var(--dim);padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:700;transition:.2s}
+  .lang button.on{background:var(--cyan);color:#04121a}
+  @media(max-width:760px){.nav{display:none}}
+
+  header.hero{padding:60px 0 34px}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:.05em;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+  .kicker::before{content:"";width:24px;height:1px;background:var(--cyan)}
+  h1{font-family:'Sora',sans-serif;font-size:clamp(38px,7vw,66px);line-height:1.02;font-weight:800;letter-spacing:-.025em;margin-bottom:14px}
+  h1 .grad{background:linear-gradient(115deg,var(--cyan),var(--net) 50%,var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .role{font-family:'JetBrains Mono',monospace;font-size:clamp(13px,2.3vw,17px);color:var(--muted);font-weight:500}
+  .role .sep{color:var(--net);margin:0 7px}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:12.7px;color:var(--muted)}
+  .chip svg{width:15px;height:15px;stroke:var(--cyan);flex-shrink:0}
+  .chip a{color:var(--muted);text-decoration:none}
+  .chip a:hover{color:var(--cyan)}
+  .cta{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:12px 19px;border-radius:11px;font-size:13.6px;font-weight:600;text-decoration:none;cursor:pointer;border:1px solid var(--line);transition:.22s;font-family:inherit}
+  .btn.primary{background:linear-gradient(115deg,var(--cyan),var(--net));color:#04121a;border:0}
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px -8px var(--glow)}
+  .btn.ghost{background:var(--panel);color:var(--txt)}
+  .btn.ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px}
+  .stat{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:18px 16px;position:relative;overflow:hidden}
+  .stat::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent)}
+  .stat .num{font-family:'Sora',sans-serif;font-size:28px;font-weight:700;letter-spacing:-.02em}
+  .stat .num small{color:var(--cyan);font-size:20px}
+  .stat .lbl{font-size:11.5px;color:var(--muted);margin-top:3px}
+  @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:13px;margin-bottom:26px}
+  .sec-idx{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan)}
+  .sec-title{font-family:'Sora',sans-serif;font-size:clamp(21px,3.4vw,29px);font-weight:700;letter-spacing:-.015em}
+  .sec-line{flex:1;height:1px;background:var(--line);align-self:center}
+
+  .about{font-size:16px;color:var(--muted);max-width:770px}
+  .about b{color:var(--txt);font-weight:600}
+
+  /* validate legend */
+  .legend{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:20px;font-size:12.5px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 15px}
+  .lg{display:inline-flex;align-items:center;gap:7px}
+  .swatch{width:13px;height:13px;border-radius:4px}
+  .sw-core{background:linear-gradient(120deg,var(--cyan),var(--net))}
+  .sw-val{background:var(--redbg);border:1px dashed var(--red)}
+  .sw-dev{background:rgba(245,179,1,.15);border:1px dashed #f5b301}
+
+  .skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+  @media(max-width:840px){.skill-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:540px){.skill-grid{grid-template-columns:1fr}}
+  .skill-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:18px;transition:.25s}
+  .skill-card:hover{border-color:var(--net);transform:translateY(-3px)}
+  .skill-card h3{font-family:'Sora',sans-serif;font-size:15px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+  .skill-card h3 .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:rgba(59,130,246,.14);flex-shrink:0}
+  .skill-card h3 .ic svg{width:17px;height:17px;stroke:var(--cyan)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:11.3px;color:var(--muted);background:var(--bg2);border:1px solid var(--line);border-radius:7px;padding:4px 9px}
+  .tag.val{color:var(--red);border:1px dashed var(--red);background:var(--redbg);cursor:help}
+  .tag.val::after{content:" ?";font-weight:700;opacity:.8}
+  .tag.dev{color:#f5b301;border:1px dashed #f5b301;background:rgba(245,179,1,.1)}
+  .tag.dev::after{content:" ◐";font-weight:700;opacity:.85}
+
+  .tl{position:relative;padding-left:26px}
+  .tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--cyan),var(--violet),transparent)}
+  .job{position:relative;margin-bottom:30px}
+  .job::before{content:"";position:absolute;left:-26px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);box-shadow:0 0 0 4px rgba(34,211,238,.12)}
+  .job.sub::before{border-color:var(--net);box-shadow:0 0 0 4px rgba(59,130,246,.1)}
+  .job.faded::before{border-color:var(--dim);box-shadow:none}
+  .job-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:baseline}
+  .job-role{font-family:'Sora',sans-serif;font-size:17px;font-weight:600}
+  .job-co{color:var(--cyan);font-weight:600}
+  .job-date{font-family:'JetBrains Mono',monospace;font-size:11.6px;color:var(--dim);white-space:nowrap}
+  .job-loc{font-size:12.3px;color:var(--dim);margin-top:2px}
+  .job ul{list-style:none;margin-top:11px;display:grid;gap:6px}
+  .job li{position:relative;padding-left:19px;font-size:14px;color:var(--muted)}
+  .job li::before{content:"▸";position:absolute;left:0;color:var(--net);font-size:12px;top:1px}
+  .metric{color:var(--cyan);font-weight:600;font-family:'JetBrains Mono',monospace;font-size:.92em;background:rgba(34,211,238,.08);padding:1px 5px;border-radius:5px}
+  .val-inline{color:var(--red);font-weight:600;background:var(--redbg);border:1px dashed var(--red);padding:0 5px;border-radius:5px;font-size:.9em}
+  .collapsed{display:none}
+  .more-btn{margin-top:6px;background:var(--panel);border:1px solid var(--line);color:var(--muted);font-size:12.3px;padding:8px 14px;border-radius:9px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:.2s}
+  .more-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+
+  /* projects */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:800px){.proj-grid{grid-template-columns:1fr}}
+  .proj{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;overflow:hidden;transition:.25s}
+  .proj:hover{border-color:var(--cyan);transform:translateY(-3px)}
+  .proj::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 120px at 100% 0%,rgba(34,211,238,.08),transparent 70%);pointer-events:none}
+  .proj-top{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+  .proj-ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;background:rgba(59,130,246,.14)}
+  .proj-ic svg{width:20px;height:20px;stroke:var(--cyan)}
+  .proj h3{font-family:'Sora',sans-serif;font-size:16px;font-weight:700}
+  .proj .ptag{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--violet)}
+  .proj p{font-size:13.3px;color:var(--muted);margin-bottom:11px}
+  .arch{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:11px;overflow-x:auto;white-space:nowrap}
+  .feat{display:grid;gap:4px;margin-bottom:12px}
+  .feat li{list-style:none;font-size:12.6px;color:var(--muted);padding-left:17px;position:relative}
+  .feat li::before{content:"◈";position:absolute;left:0;color:var(--green);font-size:10px;top:2px}
+  .stack{display:flex;flex-wrap:wrap;gap:5px}
+  .stk{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:3px 8px}
+  .proj-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;color:var(--cyan);text-decoration:none;font-family:'JetBrains Mono',monospace}
+  .proj-link svg{width:14px;height:14px;stroke:var(--cyan)}
+  .wip{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green);border:1px solid var(--green);border-radius:6px;padding:2px 7px;margin-left:auto}
+  .subhead{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);margin:26px 0 14px;display:flex;align-items:center;gap:10px}
+  .subhead::before{content:"//";color:var(--cyan)}
+  .proj-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:800px){.proj-mini-grid{grid-template-columns:1fr}}
+  .pmini{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:15px 16px;transition:.22s}
+  .pmini:hover{border-color:var(--cyan);transform:translateY(-2px)}
+  .pmini .pmh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:2px}
+  .pmini .pmt{font-family:'Sora',sans-serif;font-size:14px;font-weight:700}
+  .pmini .pmmeta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);white-space:nowrap}
+  .status{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;padding:1px 6px;border-radius:5px;margin-left:6px}
+  .status.prod{color:var(--green);border:1px solid var(--green)}
+  .status.lab{color:#f5b301;border:1px solid #f5b301}
+  .pmini .pmd{font-size:12.5px;color:var(--muted);margin:6px 0 9px}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  @media(max-width:780px){.twocol{grid-template-columns:1fr}}
+  .edu-item{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin-bottom:16px}
+  .edu-item h4{font-family:'Sora',sans-serif;font-size:15px;font-weight:600}
+  .edu-item .inst{color:var(--cyan);font-size:13px}
+  .edu-item .yr{font-family:'JetBrains Mono',monospace;font-size:11.6px;color:var(--dim);margin-top:2px}
+  .cert-badge{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,rgba(255,179,71,.1),transparent);border:1px solid rgba(255,179,71,.35);border-radius:12px;padding:13px 15px;margin-bottom:12px}
+  .cert-badge .cbi{width:40px;height:40px;border-radius:10px;background:rgba(255,179,71,.15);display:grid;place-items:center;flex-shrink:0;font-family:'JetBrains Mono',monospace;font-weight:700;color:#ffb347;font-size:12px}
+  .cert-badge.val{background:rgba(245,179,1,.08);border:1px dashed #f5b301}
+  .cert-badge.val .cbi{background:rgba(245,179,1,.14);color:#f5b301}
+  .cert-badge h4{font-family:'Sora',sans-serif;font-size:14px;font-weight:600}
+  .cert-badge .cv{font-size:11.6px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+  footer{padding:40px 0 56px;border-top:1px solid var(--line);text-align:center}
+  footer .note{font-size:12.5px;color:var(--dim);font-family:'JetBrains Mono',monospace}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  ::selection{background:var(--cyan);color:#04121a}
+  body[data-lang="pt"] [data-en]{display:none !important}
+  body[data-lang="en"] [data-pt]{display:none !important}
+</style>
+</head>
+<body data-lang="pt">
+<canvas id="net"></canvas>
+<div class="glowbg"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="node"></span><span>joao@net:~$ traceroute career</span></div>
+    <nav class="nav">
+      <a href="#about"><span data-pt>Perfil</span><span data-en>Profile</span></a>
+      <a href="#skills">Skills</a>
+      <a href="#projects"><span data-pt>Projetos</span><span data-en>Projects</span></a>
+      <a href="#exp"><span data-pt>Experiência</span><span data-en>Experience</span></a>
+      <a href="#edu"><span data-pt>Formação</span><span data-en>Education</span></a>
+    </nav>
+    <div class="lang">
+      <button id="pt" class="on" onclick="setLang('pt')">PT</button>
+      <button id="en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker"><span data-pt>PORTFÓLIO &amp; CV · ATUALIZADO EM 2026</span><span data-en>PORTFOLIO &amp; CV · UPDATED 2026</span></div>
+    <h1>João Pedro <span class="grad">Diniz</span></h1>
+    <div class="role">Infrastructure Specialist<span class="sep">/</span>Cloud<span class="sep">·</span>Networking<span class="sep">·</span>Observability<span class="sep">·</span>Security</div>
+    <div class="hero-meta">
+      <span class="chip"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Campinas, SP — Brasil</span>
+      <span class="chip"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25M6.75 17.25L1.5 12l5.25-5.25"/></svg><a href="https://github.com/j4oxdnp/j4oxdnp" target="_blank">github.com/j4oxdnp</a></span>
+      <span class="chip"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg><a href="https://www.linkedin.com/in/joao-biscassi" target="_blank">linkedin.com/in/joao-biscassi</a></span>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="#projects"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/></svg><span data-pt>Ver projetos</span><span data-en>See projects</span></a>
+      <a class="btn ghost" href="https://github.com/j4oxdnp/j4oxdnp" target="_blank"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25M6.75 17.25L1.5 12l5.25-5.25"/></svg>GitHub</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">11<small>+</small></div><div class="lbl"><span data-pt>anos em TI &amp; Infra</span><span data-en>years in IT &amp; Infra</span></div></div>
+      <div class="stat"><div class="num">AWS</div><div class="lbl"><span data-pt>Cloud Practitioner Certified</span><span data-en>Cloud Practitioner Certified</span></div></div>
+      <div class="stat"><div class="num">10<small>+</small></div><div class="lbl"><span data-pt>projetos &amp; implantações</span><span data-en>projects &amp; deployments</span></div></div>
+      <div class="stat"><div class="num">30<small>+</small></div><div class="lbl"><span data-pt>cursos &amp; certificações</span><span data-en>courses &amp; certifications</span></div></div>
+    </div>
+  </header>
+
+  <section id="about" class="reveal">
+    <div class="sec-head"><span class="sec-idx">01</span><span class="sec-title"><span data-pt>Perfil</span><span data-en>Profile</span></span><span class="sec-line"></span></div>
+    <p class="about" data-pt>Especialista de Infraestrutura e <b>Líder Técnico</b> apaixonado por resolver desafios complexos de infraestrutura, redes e automação. Experiência sólida em <b>ambientes híbridos</b> (on-premises e cloud), virtualização, redes e observabilidade. Foco na construção de ambientes <b>eficientes, seguros e escaláveis</b>, aplicando práticas modernas de Cloud (AWS), monitoramento inteligente (Zabbix, Grafana, LibreNMS), acesso remoto seguro e integração entre plataformas Microsoft e Linux. Em <b>evolução constante para SRE / DevOps</b>.</p>
+    <p class="about" data-en>Infrastructure Specialist and <b>Technical Lead</b> passionate about solving complex infrastructure, networking, and automation challenges. Solid experience in <b>hybrid environments</b> (on-premises and cloud), virtualization, networking, and observability. Focused on building <b>efficient, secure, and scalable</b> environments through modern Cloud (AWS) practices, smart monitoring (Zabbix, Grafana, LibreNMS), secure remote access, and integration between Microsoft and Linux platforms. <b>Constantly evolving toward SRE / DevOps</b>.</p>
+  </section>
+
+  <section id="skills" class="reveal">
+    <div class="sec-head"><span class="sec-idx">02</span><span class="sec-title"><span data-pt>Competências Técnicas</span><span data-en>Technical Skills</span></span><span class="sec-line"></span></div>
+    <div class="legend">
+      <span class="lg"><span class="swatch sw-core"></span><span data-pt>Consolidado</span><span data-en>Confirmed</span></span>
+      <span class="lg"><span class="swatch sw-dev"></span><span data-pt><b style="color:#f5b301">Amarelo + ◐</b> = em desenvolvimento / implantação</span><span data-en><b style="color:#f5b301">Amber + ◐</b> = in development / rollout</span></span>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m19.5 0a3 3 0 01-3 3H5.25a3 3 0 01-3-3m19.5 0a3 3 0 00-3-3H5.25a3 3 0 00-3 3m16.5 0h.008v.008h-.008v-.008zm-3 0h.008v.008h-.008v-.008z"/></svg></span><span data-pt>Infraestrutura &amp; Servidores</span><span data-en>Infrastructure &amp; Servers</span></h3>
+        <div class="tags">
+          <span class="tag">Windows Server</span><span class="tag">Linux / Ubuntu Server</span><span class="tag">Active Directory</span><span class="tag">Entra ID</span><span class="tag">GPO</span><span class="tag">ADFS</span><span class="tag">LAPS</span><span class="tag">RADIUS</span><span class="tag">WSUS</span><span class="tag">SCCM</span><span class="tag">RDS/TSG</span><span class="tag">FileServer</span><span class="tag">PrintServer</span><span class="tag">IIS</span><span class="tag">Microsoft 365</span><span class="tag">Google Workspace</span><span class="tag">Storage</span><span class="tag">Veeam</span><span class="tag">Ahsay</span><span class="tag">Disaster Recovery</span>
+          <span class="tag">DFS/DFSR</span><span class="tag">AD CS / PKI</span><span class="tag">Intune / MDM</span><span class="tag">NPS</span><span class="tag">iSCSI</span><span class="tag">SMB / NFS</span><span class="tag">Exchange Online</span><span class="tag">SharePoint</span><span class="tag">Purview</span><span class="tag">SQL Server</span><span class="tag">Apache</span><span class="tag">JumpServer</span><span class="tag">LVM</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/></svg></span>Cloud &amp; DevOps</h3>
+        <div class="tags">
+          <span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">EC2/ECS/EKS</span><span class="tag">CloudWatch</span><span class="tag">VPC</span><span class="tag">Lightsail</span><span class="tag">FinOps</span><span class="tag">IaC</span><span class="tag">Terraform</span><span class="tag">S3/IAM/RDS</span><span class="tag">Route 53</span><span class="tag">CloudFormation</span><span class="tag">WAF</span><span class="tag">Load Balancer</span><span class="tag">Auto Scaling</span><span class="tag">SES</span><span class="tag">SQS</span><span class="tag">GuardDuty</span><span class="tag">CloudTrail</span><span class="tag">Rundeck</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3"/></svg></span><span data-pt>Virtualização &amp; Containers</span><span data-en>Virtualization &amp; Containers</span></h3>
+        <div class="tags">
+          <span class="tag">VMware</span><span class="tag">Hyper-V</span><span class="tag">Proxmox</span><span class="tag">Docker</span><span class="tag">Docker Compose</span><span class="tag">XenServer</span><span class="tag">Portainer</span><span class="tag">LXC</span>
+          <span class="tag dev">Kubernetes</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/></svg></span><span data-pt>Redes</span><span data-en>Networking</span></h3>
+        <div class="tags">
+          <span class="tag">Switching</span><span class="tag">VLAN</span><span class="tag"><span data-pt>Roteamento</span><span data-en>Routing</span></span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">NAT</span><span class="tag">iptables</span><span class="tag">VPN</span><span class="tag">SD-WAN</span><span class="tag">FortiGate</span><span class="tag">FortiAP</span><span class="tag">APs</span><span class="tag">Reverse Proxy</span><span class="tag"><span data-pt>Cabeamento estruturado</span><span data-en>Structured cabling</span></span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/></svg></span><span data-pt>Observabilidade</span><span data-en>Observability</span></h3>
+        <div class="tags">
+          <span class="tag">Zabbix</span><span class="tag">Zabbix Agent2</span><span class="tag">Zabbix Sender</span><span class="tag">Grafana</span><span class="tag">LibreNMS</span><span class="tag">CloudWatch</span><span class="tag">Syslog</span><span class="tag">SNMP</span><span class="tag">SLA</span><span class="tag">SQL Server DMV</span><span class="tag">Teams Alerts</span><span class="tag">Wazuh</span><span class="tag">New Relic</span>
+          <span class="tag dev">ELK</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></span><span data-pt>Segurança</span><span data-en>Security</span></h3>
+        <div class="tags">
+          <span class="tag">SentinelOne XDR</span><span class="tag">Trend Vision One</span><span class="tag">pfSense</span><span class="tag">Sophos</span><span class="tag">Firewall</span><span class="tag">LDAP/AD</span><span class="tag">MFA/TOTP</span><span class="tag">SSO/SAML</span><span class="tag">Entra ID</span><span class="tag">Fail2Ban</span><span class="tag">SIEM</span><span class="tag">Hardening/CIS</span><span class="tag">SSL/TLS</span><span class="tag"><span data-pt>RBAC (grupos)</span><span data-en>RBAC (groups)</span></span><span class="tag">PoLP</span><span class="tag">VPN</span><span class="tag">LGPD</span><span class="tag">ManageEngine</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg></span><span data-pt>Automação &amp; Serviços</span><span data-en>Automation &amp; Services</span></h3>
+        <div class="tags">
+          <span class="tag">PowerShell</span><span class="tag">Shell Script</span><span class="tag">Bash</span><span class="tag">Power Automate</span><span class="tag">Power Automate Desktop</span><span class="tag">Microsoft Forms</span><span class="tag">Git</span><span class="tag">Nginx</span><span class="tag">IIS</span><span class="tag">MySQL/MariaDB</span><span class="tag">Oxidized</span><span class="tag">GLPI</span><span class="tag">Jira</span><span class="tag">ITIL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="reveal">
+    <div class="sec-head"><span class="sec-idx">03</span><span class="sec-title"><span data-pt>Projetos em Destaque</span><span data-en>Featured Projects</span></span><span class="sec-line"></span></div>
+    <div class="proj-grid">
+
+      <div class="proj">
+        <div class="proj-top">
+          <span class="proj-ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></span>
+          <div><h3>Apache Guacamole</h3><div class="ptag"><span data-pt>Acesso Remoto Seguro</span><span data-en>Secure Remote Access</span></div></div>
+        </div>
+        <p data-pt>Gateway de acesso remoto seguro via navegador (sem client), com proxy reverso, SSL, autenticação LDAP (Active Directory) e MFA. Centraliza o acesso à infraestrutura interna reduzindo a superfície de ataque.</p>
+        <p data-en>Secure browser-based remote access gateway (clientless), with reverse proxy, SSL, LDAP (Active Directory) authentication and MFA. Centralizes access to internal infrastructure while reducing the attack surface.</p>
+        <div class="arch">User → HTTPS/443 → Nginx (RP + SSL) → Guacamole → guacd → RDP / SSH / VNC</div>
+        <ul class="feat">
+          <li><span data-pt>Sem exposição direta de portas RDP/SSH</span><span data-en>No direct exposure of RDP/SSH ports</span></li>
+          <li><span data-pt>MFA (TOTP) + identidade via LDAP</span><span data-en>MFA (TOTP) + LDAP-based identity</span></li>
+          <li><span data-pt>Branding customizado + gravação de sessões</span><span data-en>Custom branding + session recording</span></li>
+        </ul>
+        <div class="stack"><span class="stk">Guacamole</span><span class="stk">Docker Compose</span><span class="stk">Nginx</span><span class="stk">MySQL</span><span class="stk">LDAP/AD</span><span class="stk">TOTP</span><span class="stk">TLS</span></div>
+        <a class="proj-link" href="https://github.com/j4oxdnp/guacamole-secure-access" target="_blank"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>GitHub</a>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <span class="proj-ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5"/></svg></span>
+          <div><h3>LibreNMS + Oxidized</h3><div class="ptag"><span data-pt>Monitoramento &amp; Backup de Config</span><span data-en>Monitoring &amp; Config Backup</span></div></div>
+        </div>
+        <p data-pt>Plataforma de monitoramento de rede e backup automatizado de configurações, com estrutura pronta para versionamento (Git), ingestão de Syslog/SNMP Trap e alertas por e-mail. Ambiente totalmente containerizado.</p>
+        <p data-en>Network monitoring and automated configuration backup platform, Git-ready, with Syslog/SNMP Trap ingestion and email alerting. Fully containerized environment.</p>
+        <div class="arch">Devices → SNMP/SSH → LibreNMS + Oxidized → MariaDB/Redis → Nginx (Auth)</div>
+        <ul class="feat">
+          <li><span data-pt>Backup automatizado de configs (Oxidized)</span><span data-en>Automated config backups (Oxidized)</span></li>
+          <li><span data-pt>Wrapper SSH para devices legados (algoritmos depreciados)</span><span data-en>SSH wrapper for legacy devices (deprecated algorithms)</span></li>
+          <li><span data-pt>Syslog + SNMP Trap + alertas SMTP</span><span data-en>Syslog + SNMP Trap + SMTP alerting</span></li>
+        </ul>
+        <div class="stack"><span class="stk">LibreNMS</span><span class="stk">Oxidized</span><span class="stk">MariaDB</span><span class="stk">Redis</span><span class="stk">Nginx</span><span class="stk">Docker</span><span class="stk">SNMP</span></div>
+        <a class="proj-link" href="https://github.com/j4oxdnp/Network-Configuration-Backup" target="_blank"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>GitHub</a>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <span class="proj-ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/></svg></span>
+          <div><h3>Interview</h3><div class="ptag"><span data-pt>Plataforma interna · IA</span><span data-en>Internal platform · AI</span></div></div>
+          <span class="wip"><span data-pt>EM DESENVOLVIMENTO</span><span data-en>IN PROGRESS</span></span>
+        </div>
+        <p data-pt>Ferramenta em desenvolvimento para entrevistas, estudo e evolução técnica do time, construída sobre o Claude Code. Foco em padronizar avaliações e acelerar o aprendizado contínuo da equipe.</p>
+        <p data-en>Tool under development for interviews, study, and the team's technical growth, built on top of Claude Code. Focused on standardizing assessments and accelerating the team's continuous learning.</p>
+        <div class="stack"><span class="stk">Claude Code</span><span class="stk">AI Agents</span><span class="stk"><span data-pt>Automação</span><span data-en>Automation</span></span></div>
+      </div>
+
+    </div>
+
+    <div class="subhead"><span data-pt>Mais implantações · 2025–2026</span><span data-en>More deployments · 2025–2026</span></div>
+    <div class="proj-mini-grid">
+
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Wi-Fi Corporativo · NPS/RADIUS</span><span data-en>Corporate Wi-Fi · NPS/RADIUS</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Autenticação do Wi-Fi corporativo integrada ao Active Directory via RADIUS, com APs FortiAP.</span><span data-en>Corporate Wi-Fi authentication integrated with Active Directory via RADIUS, using FortiAP access points.</span></div>
+        <div class="stack"><span class="stk">Windows NPS</span><span class="stk">RADIUS</span><span class="stk">Active Directory</span><span class="stk">FortiAP</span></div>
+      </div>
+
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Provisionamento de Usuários</span><span data-en>User Provisioning</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Automação da criação de usuários no AD: Forms → aprovação → Power Automate Desktop → PowerShell → AD.</span><span data-en>Automated AD user creation: Forms → approval → Power Automate Desktop → PowerShell → AD.</span></div>
+        <div class="stack"><span class="stk">Microsoft Forms</span><span class="stk">Power Automate</span><span class="stk">PAD</span><span class="stk">PowerShell</span><span class="stk">Active Directory</span></div>
+      </div>
+
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Integração Google + M365 + Entra ID</span><span data-en>Google + M365 + Entra ID</span></span><span class="pmmeta">2026<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>SSO e sincronização AD → Google Workspace (GCDS) preservando o fluxo MX de e-mail existente.</span><span data-en>SSO and AD → Google Workspace sync (GCDS) while preserving the existing email MX flow.</span></div>
+        <div class="stack"><span class="stk">GCDS</span><span class="stk">Entra ID</span><span class="stk">Microsoft 365</span><span class="stk">Google Workspace</span><span class="stk">SAML</span><span class="stk">DNS</span></div>
+      </div>
+
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Dashboard de SLA · Zabbix Services</span><span data-en>SLA Dashboard · Zabbix Services</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Dashboard Grafana consumindo entidades Service do Zabbix para visualização consolidada de SLA.</span><span data-en>Grafana dashboard consuming Zabbix Service entities for consolidated SLA visualization.</span></div>
+        <div class="stack"><span class="stk">Grafana</span><span class="stk">Zabbix Services</span><span class="stk">SLA</span></div>
+      </div>
+
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Monitoramento LVM-Thin (Proxmox)</span><span data-en>LVM-Thin Monitoring (Proxmox)</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Script coletando uso do Thin Pool enviado ao Zabbix, evitando indisponibilidade por esgotamento de storage.</span><span data-en>Script collecting Thin Pool usage into Zabbix, preventing outages from storage exhaustion.</span></div>
+        <div class="stack"><span class="stk">Proxmox</span><span class="stk">LVM</span><span class="stk">Bash</span><span class="stk">Zabbix</span></div>
+      </div>
+
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Recuperação de Ambiente Proxmox</span><span data-en>Proxmox Environment Recovery</span></span><span class="pmmeta">2025<span class="status lab">PROD/LAB</span></span></div>
+        <div class="pmd"><span data-pt>Resolução de Thin Pool cheio, movimentação de VMs/CTs e expansão de armazenamento.</span><span data-en>Resolved a full Thin Pool, migrated VMs/CTs and expanded storage.</span></div>
+        <div class="stack"><span class="stk">Proxmox VE</span><span class="stk">LVM</span><span class="stk">Hyper-V</span></div>
+      </div>
+
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Diagnóstico SQL Server · DMVs</span><span data-en>SQL Server Diagnostics · DMVs</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Consultas DMV para diagnóstico de locks e desempenho, com identificação rápida de sessões bloqueadoras.</span><span data-en>DMV queries for lock and performance diagnostics, quickly identifying blocking sessions.</span></div>
+        <div class="stack"><span class="stk">SQL Server</span><span class="stk">DMV</span><span class="stk">T-SQL</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="exp" class="reveal">
+    <div class="sec-head"><span class="sec-idx">04</span><span class="sec-title"><span data-pt>Experiência Profissional</span><span data-en>Professional Experience</span></span><span class="sec-line"></span></div>
+    <div class="tl">
+
+      <div class="job">
+        <div class="job-head">
+          <div><span class="job-role"><span data-pt>Especialista de Infraestrutura</span><span data-en>Infrastructure Specialist</span></span> · <span class="job-co">São Leopoldo Mandic</span></div>
+          <span class="job-date">jan/2026 — <span data-pt>atual</span><span data-en>present</span></span>
+        </div>
+        <div class="job-loc">Campinas, SP · <span data-pt>Ensino &amp; Saúde</span><span data-en>Education &amp; Healthcare</span></div>
+        <ul data-pt>
+          <li><b>Liderança Técnica:</b> lidero <span class="metric">2 analistas N3</span> e dou suporte a um time de <span class="metric">10 profissionais N2</span>, do planejamento à entrega de projetos de infraestrutura e cloud.</li>
+          <li><b>Cloud &amp; FinOps:</b> gestão e automação de ambiente <b>AWS &amp; Azure</b>, com práticas de FinOps que reduziram custos em <span class="metric">US$ 26 mil/mês</span>.</li>
+          <li><b>Observabilidade:</b> dashboards Zabbix + Grafana que elevaram a disponibilidade de servidores e serviços internos a <span class="metric">99,996%</span>.</li>
+          <li><b>Acesso Remoto Seguro:</b> implantei gateway Guacamole (LDAP + MFA) eliminando exposição direta de portas RDP/SSH.</li>
+          <li><b>Segurança:</b> gestão de endpoint com SentinelOne XDR e correlação de eventos em <span class="metric">1.200</span> ativos.</li>
+        </ul>
+        <ul data-en>
+          <li><b>Technical Leadership:</b> lead <span class="metric">2 N3 engineers</span> and support a team of <span class="metric">10 N2 professionals</span>, from planning to delivery of infrastructure and cloud projects.</li>
+          <li><b>Cloud &amp; FinOps:</b> management and automation of <b>AWS &amp; Azure</b> environments, applying FinOps practices that cut costs by <span class="metric">US$ 26k/month</span>.</li>
+          <li><b>Observability:</b> Zabbix + Grafana dashboards that raised availability of internal servers and services to <span class="metric">99.996%</span>.</li>
+          <li><b>Secure Remote Access:</b> deployed a Guacamole gateway (LDAP + MFA), eliminating direct exposure of RDP/SSH ports.</li>
+          <li><b>Security:</b> endpoint management with SentinelOne XDR and event correlation across <span class="metric">1,200</span> assets.</li>
+        </ul>
+        <ul class="collapsed" data-extra data-pt>
+          <li><b>Infraestrutura:</b> Windows/Linux Server, AD, DNS, DHCP, RDS, WSUS, SCCM, ADFS, LAPS, RADIUS, TSG, Print/FileServer.</li>
+          <li><b>Virtualização:</b> Hyper-V, VMware, Proxmox e containers (Docker).</li>
+          <li><b>Storage &amp; Backup:</b> estratégias com Veeam e Ahsay + validação de Disaster Recovery.</li>
+          <li><b>Automação:</b> PowerShell e Shell Script para automação e integração de sistemas.</li>
+          <li><b>Microsoft 365:</b> administração, políticas de segurança e integração com AD local.</li>
+        </ul>
+        <ul class="collapsed" data-extra data-en>
+          <li><b>Infrastructure:</b> Windows/Linux Server, AD, DNS, DHCP, RDS, WSUS, SCCM, ADFS, LAPS, RADIUS, TSG, Print/FileServer.</li>
+          <li><b>Virtualization:</b> Hyper-V, VMware, Proxmox and containers (Docker).</li>
+          <li><b>Storage &amp; Backup:</b> Veeam and Ahsay strategies + Disaster Recovery validation.</li>
+          <li><b>Automation:</b> PowerShell and Shell Script for system automation and integration.</li>
+          <li><b>Microsoft 365:</b> administration, security policies and integration with local AD.</li>
+        </ul>
+        <button class="more-btn" onclick="toggleMore(this)"><span data-pt>+ ver mais</span><span data-en>+ show more</span></button>
+      </div>
+
+      <div class="job sub">
+        <div class="job-head">
+          <div><span class="job-role"><span data-pt>Analista de Infraestrutura Sênior</span><span data-en>Senior Infrastructure Analyst</span></span> · <span class="job-co">São Leopoldo Mandic</span></div>
+          <span class="job-date">jul/2024 — jan/2026</span>
+        </div>
+        <div class="job-loc">Campinas, SP</div>
+        <ul data-pt>
+          <li>Coordenação técnica de projetos de infraestrutura e cloud em ambiente híbrido on-premises + AWS.</li>
+          <li>Administração de servidores Windows/Linux, virtualização (Hyper-V, VMware, Proxmox) e containers Docker.</li>
+          <li>Monitoramento com Zabbix + Grafana; backup com Veeam e Ahsay; segurança com SentinelOne.</li>
+        </ul>
+        <ul data-en>
+          <li>Technical coordination of infrastructure and cloud projects in a hybrid on-premises + AWS environment.</li>
+          <li>Administration of Windows/Linux servers, virtualization (Hyper-V, VMware, Proxmox) and Docker containers.</li>
+          <li>Monitoring with Zabbix + Grafana; backup with Veeam and Ahsay; security with SentinelOne.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div><span class="job-role"><span data-pt>Analista de Infraestrutura Sênior</span><span data-en>Senior Infrastructure Analyst</span></span> · <span class="job-co">Kenlo</span></div>
+          <span class="job-date">set/2022 — jun/2024</span>
+        </div>
+        <div class="job-loc">Campinas, SP · <span data-pt>Tecnologia / SaaS</span><span data-en>Technology / SaaS</span></div>
+        <ul data-pt>
+          <li>Gestão da infraestrutura física e lógica: AD, DNS, DHCP, WSUS, IIS, File/PrintServer, virtualização Hyper-V e VMware.</li>
+          <li>Monitoramento de ativos de rede via Zabbix + Grafana e gestão de firewall BluePex/pfSense.</li>
+          <li>Administração de Google Workspace, Slack, Jira (Confluence, Service Management) e VoIP (Avaya/Zenvia).</li>
+          <li>Backup com Veeam, gestão de ativos via GLPI e implantação de novos projetos de TI.</li>
+        </ul>
+        <ul data-en>
+          <li>Management of physical and logical infrastructure: AD, DNS, DHCP, WSUS, IIS, File/PrintServer, Hyper-V and VMware virtualization.</li>
+          <li>Network asset monitoring via Zabbix + Grafana and firewall management (BluePex/pfSense).</li>
+          <li>Administration of Google Workspace, Slack, Jira (Confluence, Service Management) and VoIP (Avaya/Zenvia).</li>
+          <li>Backup with Veeam, asset management via GLPI and rollout of new IT projects.</li>
+        </ul>
+      </div>
+
+      <div class="job faded">
+        <div class="job-head">
+          <div><span class="job-role"><span data-pt>Analista de Infraestrutura Pleno</span><span data-en>Infrastructure Analyst</span></span> · <span class="job-co">Kenlo</span></div>
+          <span class="job-date">mai/2021 — set/2022</span>
+        </div>
+        <div class="job-loc">Campinas, SP</div>
+        <ul data-pt><li>Administração de infraestrutura, servidores físicos e virtuais, monitoramento Zabbix + Grafana e suporte N1/N2/N3.</li></ul>
+        <ul data-en><li>Infrastructure administration, physical and virtual servers, Zabbix + Grafana monitoring and N1/N2/N3 support.</li></ul>
+      </div>
+
+      <div class="job faded">
+        <div class="job-head">
+          <div><span class="job-role"><span data-pt>Técnico de Informática</span><span data-en>IT Technician</span></span> · <span class="job-co">Maternidade de Campinas</span></div>
+          <span class="job-date">dez/2018 — abr/2021</span>
+        </div>
+        <div class="job-loc">Campinas, SP · <span data-pt>Saúde</span><span data-en>Healthcare</span></div>
+        <ul data-pt><li>Suporte N1/N2, gestão de infraestrutura, AD, antivírus Kaspersky, firewall Sophos, backup Veeam e monitoramento Zabbix + Grafana.</li></ul>
+        <ul data-en><li>N1/N2 technical support, infrastructure management, AD, Kaspersky antivirus, Sophos firewall, Veeam backup and Zabbix + Grafana monitoring.</li></ul>
+      </div>
+
+      <button class="more-btn" onclick="toggleOld(this)" id="oldBtn"><span data-pt>+ experiências anteriores (2012–2018)</span><span data-en>+ earlier experience (2012–2018)</span></button>
+      <div id="oldJobs" class="collapsed">
+        <div class="job faded" style="margin-top:24px">
+          <div class="job-head"><div><span class="job-role"><span data-pt>Técnico de Informática</span><span data-en>IT Technician</span></span> · <span class="job-co">Beni Car</span></div><span class="job-date">abr/2015 — nov/2018</span></div>
+          <ul data-pt><li>Suporte técnico, instalação e manutenção de servidores, AD, firewall, impressão (Windows/Ubuntu CUPS) e rede.</li></ul>
+          <ul data-en><li>Technical support, server installation and maintenance, AD, firewall, print servers (Windows/Ubuntu CUPS) and networking.</li></ul>
+        </div>
+        <div class="job faded">
+          <div class="job-head"><div><span class="job-role"><span data-pt>Técnico de Informática</span><span data-en>IT Technician</span></span> · <span class="job-co">Merlin Video</span></div><span class="job-date">out/2014 — fev/2015</span></div>
+          <ul data-pt><li>Suporte técnico, manutenção de equipamentos e infraestrutura de cabeamento.</li></ul>
+          <ul data-en><li>Technical support, equipment maintenance and cabling infrastructure.</li></ul>
+        </div>
+        <div class="job faded">
+          <div class="job-head"><div><span class="job-role"><span data-pt>Jovem Aprendiz</span><span data-en>Apprentice</span></span> · <span class="job-co">PST Electronics — Pósitron</span></div><span class="job-date">out/2012 — set/2014</span></div>
+          <ul data-pt><li>Rotinas administrativas, cadastro no SAP, criação de relatórios e indicadores de negócio.</li></ul>
+          <ul data-en><li>Administrative routines, SAP registration, report creation and business indicators.</li></ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="edu" class="reveal">
+    <div class="sec-head"><span class="sec-idx">05</span><span class="sec-title"><span data-pt>Formação &amp; Certificações</span><span data-en>Education &amp; Certifications</span></span><span class="sec-line"></span></div>
+    <div class="twocol">
+      <div>
+        <div class="cert-badge">
+          <div class="cbi">AWS</div>
+          <div><h4>AWS Certified Cloud Practitioner</h4><div class="cv">Amazon Web Services · 2025 → 2028</div></div>
+        </div>
+        <div class="cert-badge val">
+          <div class="cbi">◐</div>
+          <div><h4><span data-pt>Em Busca da Próxima Certificação</span><span data-en>Pursuing Next Certification</span></h4><div class="cv">AWS SAA · CKA</div></div>
+        </div>
+        <div class="edu-item">
+          <h4><span data-pt>Tecnólogo em Redes de Computadores</span><span data-en>Computer Networks (Associate Degree)</span></h4>
+          <div class="inst">Universidade Paulista — UNIP</div>
+          <div class="yr">2020 — 2023</div>
+        </div>
+        <div class="edu-item">
+          <h4><span data-pt>Técnico em Informática</span><span data-en>IT Technical Course</span></h4>
+          <div class="inst">Microcamp Tecnologia</div>
+          <div class="yr">2012 — 2014</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family:'Sora';font-size:15px;margin-bottom:12px"><span data-pt>Idiomas</span><span data-en>Languages</span></h3>
+        <div class="edu-item"><h4>Português</h4><div class="cv" style="color:var(--muted);font-size:12.3px;font-family:'JetBrains Mono',monospace"><span data-pt>Nativo</span><span data-en>Native</span></div></div>
+        <div class="edu-item"><h4>English</h4><div class="cv" style="color:var(--muted);font-size:12.3px;font-family:'JetBrains Mono',monospace"><span data-pt>Intermediário / Técnico</span><span data-en>Intermediate / Technical</span></div></div>
+        <h3 style="font-family:'Sora';font-size:15px;margin:22px 0 10px"><span data-pt>Formação Contínua</span><span data-en>Continuous Learning</span> <span style="font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:12.5px">30+</span></h3>
+        <p style="font-size:13px;color:var(--muted)"><span data-pt>Cursos em AWS (Observability, ECS/EKS), Docker, Kubernetes, DevOps, pfSense, Cybersecurity, Bug Bounty e Liderança — Alura, AWS, DIO, Cisco, 4Linux, KubeDev e outros.</span><span data-en>Courses in AWS (Observability, ECS/EKS), Docker, Kubernetes, DevOps, pfSense, Cybersecurity, Bug Bounty and Leadership — Alura, AWS, DIO, Cisco, 4Linux, KubeDev and others.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="note">// <span data-pt>portfólio &amp; cv · clareza, redes e nuvem</span><span data-en>portfolio &amp; cv · clarity, networking and cloud</span> · João Pedro Diniz · 2026</div>
+  </footer>
+</div>
+
+<script>
+  function setLang(l){
+    document.body.setAttribute('data-lang', l);
+    document.documentElement.lang = l==='pt'?'pt-BR':'en';
+    document.getElementById('pt').classList.toggle('on', l==='pt');
+    document.getElementById('en').classList.toggle('on', l==='en');
+    try{localStorage.setItem('cvlang2',l)}catch(e){}
+  }
+  function toggleMore(btn){
+    const job = btn.closest('.job');
+    const extras = job.querySelectorAll('[data-extra]');
+    const open = btn.dataset.open==='1';
+    extras.forEach(u=>u.classList.toggle('collapsed'));
+    btn.dataset.open = open?'0':'1';
+    btn.querySelector('[data-pt]').textContent = open?'+ ver mais':'– ver menos';
+    btn.querySelector('[data-en]').textContent = open?'+ show more':'– show less';
+    setLang(document.documentElement.lang==='en'?'en':'pt');
+  }
+  function toggleOld(btn){
+    const box = document.getElementById('oldJobs');
+    box.classList.toggle('collapsed');
+    const open = !box.classList.contains('collapsed');
+    btn.querySelector('[data-pt]').textContent = open?'– ocultar anteriores':'+ experiências anteriores (2012–2018)';
+    btn.querySelector('[data-en]').textContent = open?'– hide earlier':'+ earlier experience (2012–2018)';
+    setLang(document.documentElement.lang==='en'?'en':'pt');
+  }
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(s=>io.observe(s));
+
+  /* network constellation background */
+  (function(){
+    const c=document.getElementById('net'), x=c.getContext('2d');
+    let w,h,pts,raf;
+    function rz(){w=c.width=innerWidth;h=c.height=innerHeight;
+      const n=Math.min(70,Math.floor(w*h/22000));
+      pts=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35}));}
+    function draw(){
+      x.clearRect(0,0,w,h);
+      for(let i=0;i<pts.length;i++){const p=pts[i];p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>w)p.vx*=-1; if(p.y<0||p.y>h)p.vy*=-1;
+        for(let j=i+1;j<pts.length;j++){const q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy);
+          if(d<130){x.strokeStyle='rgba(59,130,246,'+(1-d/130)*.28+')';x.lineWidth=.7;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke();}}
+        x.fillStyle='rgba(34,211,238,.75)';x.beginPath();x.arc(p.x,p.y,1.4,0,6.28);x.fill();}
+      raf=requestAnimationFrame(draw);
+    }
+    rz();draw();addEventListener('resize',()=>{cancelAnimationFrame(raf);rz();draw();});
+  })();
+
+  let saved='pt'; try{saved=localStorage.getItem('cvlang2')||'pt'}catch(e){}
+  setLang(saved);
+</script>
+</body>
+</html>
