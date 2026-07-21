@@ -106,6 +106,7 @@
   .skill-card h3 .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:rgba(59,130,246,.14);flex-shrink:0}
   .skill-card h3 .ic svg{width:17px;height:17px;stroke:var(--cyan)}
   .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .skill-card .tags{min-height:112px;align-content:flex-start}
   .tag{font-family:'JetBrains Mono',monospace;font-size:11.3px;color:var(--muted);background:var(--bg2);border:1px solid var(--line);border-radius:7px;padding:4px 9px}
   .tag.val{color:var(--red);border:1px dashed var(--red);background:var(--redbg);cursor:help}
   .tag.val::after{content:" ?";font-weight:700;opacity:.8}
@@ -176,7 +177,7 @@
   .carousel-dots{display:flex;gap:7px}
   .carousel-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
   .carousel-dots i.on{background:var(--cyan);box-shadow:0 0 8px var(--glow)}
-  .tag-dots{display:flex;gap:6px;margin-top:12px}
+  .tag-dots{display:flex;gap:6px;margin-top:12px;min-height:8px}
   .tag-dots i{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
   .tag-dots i.on{background:var(--cyan);box-shadow:0 0 7px var(--glow)}
 
@@ -244,7 +245,7 @@
     <div class="stats">
       <div class="stat"><div class="num">11<small>+</small></div><div class="lbl"><span data-pt>anos em TI &amp; Infra</span><span data-en>years in IT &amp; Infra</span></div></div>
       <div class="stat"><div class="num">AWS</div><div class="lbl"><span data-pt>Cloud Practitioner Certified</span><span data-en>Cloud Practitioner Certified</span></div></div>
-      <div class="stat"><div class="num">15<small>+</small></div><div class="lbl"><span data-pt>projetos &amp; implantações</span><span data-en>projects &amp; deployments</span></div></div>
+      <div class="stat"><div class="num">20<small>+</small></div><div class="lbl"><span data-pt>projetos &amp; implantações</span><span data-en>projects &amp; deployments</span></div></div>
       <div class="stat"><div class="num">30<small>+</small></div><div class="lbl"><span data-pt>cursos &amp; certificações</span><span data-en>courses &amp; certifications</span></div></div>
     </div>
   </header>
@@ -359,6 +360,73 @@
         <div class="stack"><span class="stk">Claude Code</span><span class="stk">AI Agents</span><span class="stk"><span data-pt>Automação</span><span data-en>Automation</span></span></div>
       </div>
 
+      <div class="proj">
+        <div class="proj-top">
+          <span class="proj-ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m19.5 0a3 3 0 01-3 3H5.25a3 3 0 01-3-3m19.5 0a3 3 0 00-3-3H5.25a3 3 0 00-3 3m16.5 0h.008v.008h-.008v-.008zm-3 0h.008v.008h-.008v-.008z"/></svg></span>
+          <div><h3><span data-pt>Migração VMware/Proxmox → Hyper-V</span><span data-en>VMware/Proxmox → Hyper-V Migration</span></h3><div class="ptag"><span data-pt>Virtualização &amp; DR</span><span data-en>Virtualization &amp; DR</span></div></div>
+        </div>
+        <p data-pt>Migração de máquinas virtuais de VMware e Proxmox para Hyper-V com downtime mínimo, incluindo o container Wareline (App/DB), e réplica em servidor secundário para disaster recovery.</p>
+        <p data-en>Migration of virtual machines from VMware and Proxmox to Hyper-V with minimal downtime, including the Wareline (App/DB) container, with replication to a secondary server for disaster recovery.</p>
+        <div class="arch">Snapshot/Backup → Clone → qemu-img → <span data-pt>Validação Kernel</span><span data-en>Kernel Validation</span> → <span data-pt>Recursos</span><span data-en>Resources</span> → Hyper-V (Replica + Snapshots)</div>
+        <ul class="feat">
+          <li><span data-pt>Conversão de disco via QEMU (qemu-img)</span><span data-en>Disk conversion via QEMU (qemu-img)</span></li>
+          <li><span data-pt>Validação de kernel/boot e ajuste de recursos pós-conversão</span><span data-en>Kernel/boot validation and resource tuning after conversion</span></li>
+          <li><span data-pt>Réplica em servidor Hyper-V secundário (DR) com snapshots e backups automáticos</span><span data-en>Replication to a secondary Hyper-V server (DR) with automated snapshots and backups</span></li>
+        </ul>
+        <div class="stack"><span class="stk">Hyper-V</span><span class="stk">VMware</span><span class="stk">Proxmox</span><span class="stk">QEMU / qemu-img</span><span class="stk">Hyper-V Replica</span><span class="stk">LVM</span></div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <span class="proj-ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m-9 9h18"/></svg></span>
+          <div><h3><span data-pt>Servidor Privado Perfect World</span><span data-en>Perfect World Private Server</span></h3><div class="ptag">pwrise.com · AWS · Linux · 2018</div></div>
+        </div>
+        <p data-pt>Criação e hospedagem completa, do zero, de um servidor privado do MMORPG Perfect World na AWS — infraestrutura, banco, daemons do jogo, painéis de administração e cliente. Ficou online por ~3 meses.</p>
+        <p data-en>Full from-scratch build and hosting of a Perfect World MMORPG private server on AWS — infrastructure, database, game daemons, admin panels and client. Ran live for ~3 months.</p>
+        <div class="arch">Client/Launcher → Route 53 → EC2 Ubuntu (authd · gamedbd · gs · MySQL · pwadmin) · <span data-pt>Site/painel em VPS separado</span><span data-en>Site/panel on separate VPS</span> → Backup</div>
+        <ul class="feat">
+          <li><span data-pt>AWS: EC2 + Elastic IP + Security Group + Route 53 + EBS criptografado</span><span data-en>AWS: EC2 + Elastic IP + Security Group + Route 53 + encrypted EBS</span></li>
+          <li><span data-pt>Ubuntu (libs 32-bit) + stack LAMP; pwadmin (contas/status) e iWeb (gestão gráfica de GM, chars e skills)</span><span data-en>Ubuntu (32-bit libs) + LAMP stack; pwadmin (accounts/status) and iWeb (graphical GM, char and skill management)</span></li>
+          <li><span data-pt>Hardening: SSH só por chave .pem via VPN, root sem acesso, serviços com usuário dedicado, fail2ban</span><span data-en>Hardening: SSH only via .pem key over VPN, root disabled, services under a dedicated user, fail2ban</span></li>
+          <li><span data-pt>Site e painel financeiro/de contas isolados em VPS separado; backups (MySQL + arquivos) via cron</span><span data-en>Site and financial/accounts panel isolated on a separate VPS; backups (MySQL + files) via cron</span></li>
+        </ul>
+        <div class="stack"><span class="stk">AWS EC2</span><span class="stk">Route 53</span><span class="stk">Elastic IP</span><span class="stk">EBS</span><span class="stk">Ubuntu</span><span class="stk">MySQL</span><span class="stk">Apache/PHP</span><span class="stk">fail2ban</span><span class="stk">OpenVPN</span><span class="stk">pwadmin</span></div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <span class="proj-ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></span>
+          <div><h3><span data-pt>VPN Corporativa · OpenVPN</span><span data-en>Corporate VPN · OpenVPN</span></h3><div class="ptag"><span data-pt>Redes &amp; Segurança · Docker · Kenlo</span><span data-en>Networking &amp; Security · Docker · Kenlo</span></div></div>
+        </div>
+        <p data-pt>Migração da VPN do pfSense para container OpenVPN, com autenticação LDAP, split-tunnel por rotas, coletor de sessões e dashboard de conexões em MariaDB. Empacotado em Docker Compose (Rancher).</p>
+        <p data-en>Migrated the VPN from pfSense to an OpenVPN container, with LDAP authentication, route-based split-tunnel, a session collector and a connections dashboard in MariaDB. Packaged with Docker Compose (Rancher).</p>
+        <div class="arch">Client (LDAP) → OpenVPN (TCP/UDP) → <span data-pt>rotas split-tunnel</span><span data-en>split-tunnel routes</span> · Collector (mgmt :7505) → MariaDB → Dashboard</div>
+        <ul class="feat">
+          <li><span data-pt>Autenticação LDAP (auth-user-pass-verify) e iptables apontando para o serviço</span><span data-en>LDAP authentication (auth-user-pass-verify) and iptables routing to the service</span></li>
+          <li><span data-pt>Split-tunnel: rotas específicas empurradas aos clientes</span><span data-en>Split-tunnel: specific routes pushed to clients</span></li>
+          <li><span data-pt>Coletor de sessões via management interface → MariaDB (dashboard de conexões)</span><span data-en>Session collector via management interface → MariaDB (connections dashboard)</span></li>
+        </ul>
+        <div class="stack"><span class="stk">OpenVPN</span><span class="stk">Docker Compose</span><span class="stk">MariaDB</span><span class="stk">LDAP</span><span class="stk">iptables</span><span class="stk">Alpine</span></div>
+        <a class="proj-link" href="https://github.com/j4oxdnp/vpn-proxy-wpad" target="_blank"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>GitHub</a>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <span class="proj-ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m-9 9h18"/></svg></span>
+          <div><h3><span data-pt>Proxy Corporativo · Squid + WPAD</span><span data-en>Corporate Proxy · Squid + WPAD</span></h3><div class="ptag"><span data-pt>Redes &amp; Segurança · Docker</span><span data-en>Networking &amp; Security · Docker</span></div></div>
+        </div>
+        <p data-pt>Proxy Squid com descoberta automática via WPAD (arquivo PAC servido por Nginx) e controle de acesso por ACLs. Ambiente containerizado para navegação corporativa controlada.</p>
+        <p data-en>Squid proxy with automatic discovery via WPAD (PAC file served by Nginx) and ACL-based access control. Containerized environment for controlled corporate browsing.</p>
+        <div class="arch">Browser → WPAD (wpad.dat / Nginx) → Squid Proxy (ACLs) → Internet</div>
+        <ul class="feat">
+          <li><span data-pt>Auto-configuração de proxy via WPAD (arquivo PAC), sem tocar em cada máquina</span><span data-en>Proxy auto-configuration via WPAD (PAC file), with no per-machine setup</span></li>
+          <li><span data-pt>ACLs de portas seguras e redes internas; egress controlado</span><span data-en>Safe-ports and internal-network ACLs; controlled egress</span></li>
+          <li><span data-pt>PAC servido pelo Nginx com o mime-type correto; tudo em Docker Compose</span><span data-en>PAC served by Nginx with the correct mime-type; all in Docker Compose</span></li>
+        </ul>
+        <div class="stack"><span class="stk">Squid</span><span class="stk">Nginx</span><span class="stk">WPAD / PAC</span><span class="stk">Docker Compose</span><span class="stk">Alpine</span></div>
+        <a class="proj-link" href="https://github.com/j4oxdnp/vpn-proxy-wpad" target="_blank"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>GitHub</a>
+      </div>
+
     </div>
 
     <div class="subhead"><span data-pt>Mais implantações · 2025–2026</span><span data-en>More deployments · 2025–2026</span></div>
@@ -378,11 +446,6 @@
         <div class="pmh"><span class="pmt"><span data-pt>Observabilidade Zabbix + Grafana</span><span data-en>Observability Zabbix + Grafana</span></span><span class="pmmeta">2018–2026<span class="status prod">PROD</span></span></div>
         <div class="pmd"><span data-pt>Implantação de monitoramento Zabbix + Grafana em três organizações (Maternidade, Kenlo e Mandic).</span><span data-en>Zabbix + Grafana monitoring deployed across three organizations (Maternidade, Kenlo and Mandic).</span></div>
         <div class="stack"><span class="stk">Zabbix</span><span class="stk">Grafana</span><span class="stk">SNMP</span><span class="stk">Alerting</span></div>
-      </div>
-      <div class="pmini">
-        <div class="pmh"><span class="pmt"><span data-pt>Migração de Virtualização → Hyper-V</span><span data-en>Virtualization Migration → Hyper-V</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
-        <div class="pmd"><span data-pt>Migração de VMware e Proxmox para Hyper-V com conversão de discos, réplicas e snapshots automáticos — incluindo o container Wareline (App/DB).</span><span data-en>Migration of VMware and Proxmox to Hyper-V with disk conversion, automated replicas and snapshots — including the Wareline (App/DB) container.</span></div>
-        <div class="stack"><span class="stk">Hyper-V</span><span class="stk">VMware</span><span class="stk">Proxmox</span><span class="stk">Replication</span><span class="stk">Snapshots</span></div>
       </div>
       <div class="pmini">
         <div class="pmh"><span class="pmt">Wazuh · SIEM</span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
@@ -420,11 +483,6 @@
         <div class="pmh"><span class="pmt"><span data-pt>Diagnóstico SQL Server · DMVs</span><span data-en>SQL Server Diagnostics · DMVs</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
         <div class="pmd"><span data-pt>Consultas DMV para diagnóstico de locks e desempenho, com identificação rápida de sessões bloqueadoras.</span><span data-en>DMV queries for lock and performance diagnostics, quickly identifying blocking sessions.</span></div>
         <div class="stack"><span class="stk">SQL Server</span><span class="stk">DMV</span><span class="stk">T-SQL</span></div>
-      </div>
-      <div class="pmini">
-        <div class="pmh"><span class="pmt"><span data-pt>VPN OpenVPN em Container</span><span data-en>OpenVPN in Container</span></span><span class="pmmeta">2024<span class="status prod">PROD</span></span></div>
-        <div class="pmd"><span data-pt>Migração da VPN do pfSense para container OpenVPN, com iptables apontando para o serviço, autenticação LDAPS, tabela de roteamento e dashboard de conexões.</span><span data-en>Migrated VPN from pfSense to an OpenVPN container, with iptables routing to the service, LDAPS authentication, routing table and connections dashboard.</span></div>
-        <div class="stack"><span class="stk">OpenVPN</span><span class="stk">Docker</span><span class="stk">iptables</span><span class="stk">LDAPS</span><span class="stk">Routing</span></div>
       </div>
     </div>
     <div class="mini-page proj-mini-grid" data-mpage="2">
@@ -619,6 +677,7 @@
     document.getElementById('pt').classList.toggle('on', l==='pt');
     document.getElementById('en').classList.toggle('on', l==='en');
     try{localStorage.setItem('cvlang2',l)}catch(e){}
+    if(window.__repaginateSkills) setTimeout(window.__repaginateSkills,0);
   }
   function toggleMore(btn){
     const job = btn.closest('.job');
@@ -661,25 +720,42 @@
   })();
 
 
-  // per-card tag pagination (~5-6 lines per page)
+  // per-card tag pagination — uniform height (rows per page)
   (function(){
-    document.querySelectorAll('.skill-card').forEach(function(card){
+    var ROWS_PER_PAGE=4;
+    function paginate(card){
       var tags=card.querySelector('.tags'); if(!tags) return;
       var items=Array.prototype.slice.call(tags.children).filter(function(el){return el.classList.contains('tag');});
-      var max=14;
-      if(items.length<=max) return;
-      var pageCount=Math.ceil(items.length/max);
-      var per=Math.ceil(items.length/pageCount);
+      // reset for measurement
+      items.forEach(function(it){ it.style.display=''; });
+      var old=card.querySelector('.tag-dots'); if(old) old.remove();
+      // group items into visual rows by offsetTop
+      var rows=[], lastTop=null;
+      items.forEach(function(it){
+        var top=it.offsetTop;
+        if(lastTop===null || top>lastTop+4){ rows.push([]); lastTop=top; }
+        rows[rows.length-1].push(it);
+      });
+      var pageCount=Math.max(1, Math.ceil(rows.length/ROWS_PER_PAGE));
+      var pageOf=[];
+      rows.forEach(function(r,ri){ var pg=Math.floor(ri/ROWS_PER_PAGE); r.forEach(function(it){ pageOf.push([it,pg]); }); });
       var cur=0;
       var nav=document.createElement('div'); nav.className='tag-dots';
-      for(var p=0;p<pageCount;p++){ var d=document.createElement('i'); d.dataset.p=p; d.onclick=function(){cur=+this.dataset.p;render();}; nav.appendChild(d);}
+      if(pageCount>1){
+        for(var p=0;p<pageCount;p++){ var d=document.createElement('i'); d.dataset.p=p; d.onclick=function(){cur=+this.dataset.p;render();}; nav.appendChild(d); }
+      }
       tags.insertAdjacentElement('afterend', nav);
       function render(){
-        items.forEach(function(it,i){ it.style.display=(Math.floor(i/per)===cur)?'':'none'; });
+        pageOf.forEach(function(pair){ pair[0].style.display=(pair[1]===cur)?'':'none'; });
         nav.querySelectorAll('i').forEach(function(d,i){ d.classList.toggle('on', i===cur); });
       }
       render();
-    });
+    }
+    function all(){ document.querySelectorAll('.skill-card').forEach(paginate); }
+    window.__repaginateSkills=all;
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(all); }
+    window.addEventListener('load', all);
+    setTimeout(all, 350);
   })();
 
   // mini projects carousel
