@@ -166,6 +166,19 @@
   .status.prod{color:var(--green);border:1px solid var(--green)}
   .status.lab{color:#f5b301;border:1px solid #f5b301}
   .pmini .pmd{font-size:12.5px;color:var(--muted);margin:6px 0 9px}
+  .mini-page{display:none}
+  .mini-page.active{display:grid}
+  .carousel-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:18px}
+  .carousel-nav button{width:40px;height:40px;border-radius:50%;background:var(--panel);border:1px solid var(--line);color:var(--muted);font-size:18px;cursor:pointer;transition:.2s;display:grid;place-items:center;font-family:'JetBrains Mono',monospace}
+  .carousel-nav button:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+  .carousel-nav button:disabled{opacity:.3;cursor:default;transform:none;border-color:var(--line);color:var(--dim)}
+  .carousel-ind{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);min-width:54px;text-align:center}
+  .carousel-dots{display:flex;gap:7px}
+  .carousel-dots i{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
+  .carousel-dots i.on{background:var(--cyan);box-shadow:0 0 8px var(--glow)}
+  .tag-dots{display:flex;gap:6px;margin-top:12px}
+  .tag-dots i{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
+  .tag-dots i.on{background:var(--cyan);box-shadow:0 0 7px var(--glow)}
 
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:26px}
   @media(max-width:780px){.twocol{grid-template-columns:1fr}}
@@ -224,12 +237,14 @@
     <div class="cta">
       <a class="btn primary" href="#projects"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/></svg><span data-pt>Ver projetos</span><span data-en>See projects</span></a>
       <a class="btn ghost" href="https://github.com/j4oxdnp/j4oxdnp" target="_blank"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25M6.75 17.25L1.5 12l5.25-5.25"/></svg>GitHub</a>
+      <a class="btn ghost" href="CV-JoaoPedro-PT.pdf" download><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg><span data-pt>Baixar CV · PT</span><span data-en>Download CV · PT</span></a>
+      <a class="btn ghost" href="CV-JoaoPedro-EN.pdf" download><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg><span data-pt>CV · EN</span><span data-en>CV · EN</span></a>
     </div>
 
     <div class="stats">
       <div class="stat"><div class="num">11<small>+</small></div><div class="lbl"><span data-pt>anos em TI &amp; Infra</span><span data-en>years in IT &amp; Infra</span></div></div>
       <div class="stat"><div class="num">AWS</div><div class="lbl"><span data-pt>Cloud Practitioner Certified</span><span data-en>Cloud Practitioner Certified</span></div></div>
-      <div class="stat"><div class="num">10<small>+</small></div><div class="lbl"><span data-pt>projetos &amp; implantações</span><span data-en>projects &amp; deployments</span></div></div>
+      <div class="stat"><div class="num">15<small>+</small></div><div class="lbl"><span data-pt>projetos &amp; implantações</span><span data-en>projects &amp; deployments</span></div></div>
       <div class="stat"><div class="num">30<small>+</small></div><div class="lbl"><span data-pt>cursos &amp; certificações</span><span data-en>courses &amp; certifications</span></div></div>
     </div>
   </header>
@@ -251,13 +266,7 @@
         <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m19.5 0a3 3 0 01-3 3H5.25a3 3 0 01-3-3m19.5 0a3 3 0 00-3-3H5.25a3 3 0 00-3 3m16.5 0h.008v.008h-.008v-.008zm-3 0h.008v.008h-.008v-.008z"/></svg></span><span data-pt>Infraestrutura &amp; Servidores</span><span data-en>Infrastructure &amp; Servers</span></h3>
         <div class="tags">
           <span class="tag">Windows Server</span><span class="tag">Linux / Ubuntu Server</span><span class="tag">Active Directory</span><span class="tag">Entra ID</span><span class="tag">GPO</span><span class="tag">ADFS</span><span class="tag">LAPS</span><span class="tag">RADIUS</span><span class="tag">WSUS</span><span class="tag">SCCM</span><span class="tag">RDS/TSG</span><span class="tag">FileServer</span><span class="tag">PrintServer</span><span class="tag">IIS</span><span class="tag">Microsoft 365</span><span class="tag">Google Workspace</span><span class="tag">Storage</span><span class="tag">Veeam</span><span class="tag">Ahsay</span><span class="tag">Disaster Recovery</span>
-          <span class="tag">DFS/DFSR</span><span class="tag">AD CS / PKI</span><span class="tag">Intune / MDM</span><span class="tag">NPS</span><span class="tag">iSCSI</span><span class="tag">SMB / NFS</span><span class="tag">Exchange Online</span><span class="tag">SharePoint</span><span class="tag">Purview</span><span class="tag">SQL Server</span><span class="tag">Apache</span><span class="tag">JumpServer</span><span class="tag">LVM</span>
-        </div>
-      </div>
-      <div class="skill-card">
-        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/></svg></span>Cloud &amp; DevOps</h3>
-        <div class="tags">
-          <span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">EC2/ECS/EKS</span><span class="tag">CloudWatch</span><span class="tag">VPC</span><span class="tag">Lightsail</span><span class="tag">FinOps</span><span class="tag">IaC</span><span class="tag">Terraform</span><span class="tag">S3/IAM/RDS</span><span class="tag">Route 53</span><span class="tag">CloudFormation</span><span class="tag">WAF</span><span class="tag">Load Balancer</span><span class="tag">Auto Scaling</span><span class="tag">SES</span><span class="tag">SQS</span><span class="tag">GuardDuty</span><span class="tag">CloudTrail</span><span class="tag">Rundeck</span>
+          <span class="tag">DFS/DFSR</span><span class="tag">AD CS / PKI</span><span class="tag">Intune / MDM</span><span class="tag">NPS</span><span class="tag">iSCSI</span><span class="tag">SMB / NFS</span><span class="tag">Exchange Online</span><span class="tag">SharePoint</span><span class="tag">Purview</span><span class="tag">SQL Server</span><span class="tag">Apache</span><span class="tag">JumpServer</span><span class="tag">LVM</span><span class="tag">TOTVS RM</span><span class="tag">PostgreSQL <span data-pt>(básico)</span><span data-en>(basic)</span></span><span class="tag">gMSA</span><span class="tag">QNAP</span><span class="tag">PowerDNS</span>
         </div>
       </div>
       <div class="skill-card">
@@ -270,26 +279,32 @@
       <div class="skill-card">
         <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/></svg></span><span data-pt>Redes</span><span data-en>Networking</span></h3>
         <div class="tags">
-          <span class="tag">Switching</span><span class="tag">VLAN</span><span class="tag"><span data-pt>Roteamento</span><span data-en>Routing</span></span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">NAT</span><span class="tag">iptables</span><span class="tag">VPN</span><span class="tag">SD-WAN</span><span class="tag">FortiGate</span><span class="tag">FortiAP</span><span class="tag">APs</span><span class="tag">Reverse Proxy</span><span class="tag"><span data-pt>Cabeamento estruturado</span><span data-en>Structured cabling</span></span>
+          <span class="tag">Switching</span><span class="tag">VLAN</span><span class="tag"><span data-pt>Roteamento</span><span data-en>Routing</span></span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">NAT</span><span class="tag">iptables</span><span class="tag">VPN</span><span class="tag">SD-WAN</span><span class="tag">FortiGate</span><span class="tag">FortiAP</span><span class="tag">APs</span><span class="tag">Reverse Proxy</span><span class="tag"><span data-pt>Cabeamento estruturado</span><span data-en>Structured cabling</span></span><span class="tag">UniFi</span><span class="tag">Omada</span><span class="tag">Dell Switch</span><span class="tag">Traefik <span data-pt>(básico)</span><span data-en>(basic)</span></span>
         </div>
       </div>
       <div class="skill-card">
         <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/></svg></span><span data-pt>Observabilidade</span><span data-en>Observability</span></h3>
         <div class="tags">
           <span class="tag">Zabbix</span><span class="tag">Zabbix Agent2</span><span class="tag">Zabbix Sender</span><span class="tag">Grafana</span><span class="tag">LibreNMS</span><span class="tag">CloudWatch</span><span class="tag">Syslog</span><span class="tag">SNMP</span><span class="tag">SLA</span><span class="tag">SQL Server DMV</span><span class="tag">Teams Alerts</span><span class="tag">Wazuh</span><span class="tag">New Relic</span>
-          <span class="tag dev">ELK</span>
+          <span class="tag dev">ELK</span><span class="tag">Metabase</span>
         </div>
       </div>
       <div class="skill-card">
         <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></span><span data-pt>Segurança</span><span data-en>Security</span></h3>
         <div class="tags">
-          <span class="tag">SentinelOne XDR</span><span class="tag">Trend Vision One</span><span class="tag">pfSense</span><span class="tag">Sophos</span><span class="tag">Firewall</span><span class="tag">LDAP/AD</span><span class="tag">MFA/TOTP</span><span class="tag">SSO/SAML</span><span class="tag">Entra ID</span><span class="tag">Fail2Ban</span><span class="tag">SIEM</span><span class="tag">Hardening/CIS</span><span class="tag">SSL/TLS</span><span class="tag"><span data-pt>RBAC (grupos)</span><span data-en>RBAC (groups)</span></span><span class="tag">PoLP</span><span class="tag">VPN</span><span class="tag">LGPD</span><span class="tag">ManageEngine</span>
+          <span class="tag">SentinelOne XDR</span><span class="tag">Trend Vision One</span><span class="tag">pfSense</span><span class="tag">Sophos</span><span class="tag">Firewall</span><span class="tag">LDAP/AD</span><span class="tag">MFA/TOTP</span><span class="tag">SSO/SAML</span><span class="tag">Entra ID</span><span class="tag">Fail2Ban</span><span class="tag">SIEM</span><span class="tag">Hardening/CIS</span><span class="tag">SSL/TLS</span><span class="tag"><span data-pt>RBAC (grupos)</span><span data-en>RBAC (groups)</span></span><span class="tag">PoLP</span><span class="tag">VPN</span><span class="tag">LGPD</span><span class="tag">ManageEngine</span><span class="tag dev">HashiCorp Vault</span>
         </div>
       </div>
       <div class="skill-card">
         <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg></span><span data-pt>Automação &amp; Serviços</span><span data-en>Automation &amp; Services</span></h3>
         <div class="tags">
           <span class="tag">PowerShell</span><span class="tag">Shell Script</span><span class="tag">Bash</span><span class="tag">Power Automate</span><span class="tag">Power Automate Desktop</span><span class="tag">Microsoft Forms</span><span class="tag">Git</span><span class="tag">Nginx</span><span class="tag">IIS</span><span class="tag">MySQL/MariaDB</span><span class="tag">Oxidized</span><span class="tag">GLPI</span><span class="tag">Jira</span><span class="tag">ITIL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/></svg></span>Cloud &amp; DevOps</h3>
+        <div class="tags">
+          <span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">EC2/ECS/EKS</span><span class="tag">CloudWatch</span><span class="tag">VPC</span><span class="tag">Lightsail</span><span class="tag">FinOps</span><span class="tag">IaC</span><span class="tag">Terraform</span><span class="tag">S3/IAM/RDS</span><span class="tag">Route 53</span><span class="tag">CloudFormation</span><span class="tag">WAF</span><span class="tag">Load Balancer</span><span class="tag">Auto Scaling</span><span class="tag">SES</span><span class="tag">SQS</span><span class="tag">GuardDuty</span><span class="tag">CloudTrail</span><span class="tag">Rundeck</span><span class="tag">Rancher</span>
         </div>
       </div>
     </div>
@@ -347,50 +362,94 @@
     </div>
 
     <div class="subhead"><span data-pt>Mais implantações · 2025–2026</span><span data-en>More deployments · 2025–2026</span></div>
-    <div class="proj-mini-grid">
-
-      <div class="pmini">
-        <div class="pmh"><span class="pmt"><span data-pt>Wi-Fi Corporativo · NPS/RADIUS</span><span data-en>Corporate Wi-Fi · NPS/RADIUS</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
-        <div class="pmd"><span data-pt>Autenticação do Wi-Fi corporativo integrada ao Active Directory via RADIUS, com APs FortiAP.</span><span data-en>Corporate Wi-Fi authentication integrated with Active Directory via RADIUS, using FortiAP access points.</span></div>
-        <div class="stack"><span class="stk">Windows NPS</span><span class="stk">RADIUS</span><span class="stk">Active Directory</span><span class="stk">FortiAP</span></div>
-      </div>
-
-      <div class="pmini">
-        <div class="pmh"><span class="pmt"><span data-pt>Provisionamento de Usuários</span><span data-en>User Provisioning</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
-        <div class="pmd"><span data-pt>Automação da criação de usuários no AD: Forms → aprovação → Power Automate Desktop → PowerShell → AD.</span><span data-en>Automated AD user creation: Forms → approval → Power Automate Desktop → PowerShell → AD.</span></div>
-        <div class="stack"><span class="stk">Microsoft Forms</span><span class="stk">Power Automate</span><span class="stk">PAD</span><span class="stk">PowerShell</span><span class="stk">Active Directory</span></div>
-      </div>
-
+    <div class="mini-carousel">
+    <div class="mini-page active proj-mini-grid" data-mpage="0">
       <div class="pmini">
         <div class="pmh"><span class="pmt"><span data-pt>Integração Google + M365 + Entra ID</span><span data-en>Google + M365 + Entra ID</span></span><span class="pmmeta">2026<span class="status prod">PROD</span></span></div>
         <div class="pmd"><span data-pt>SSO e sincronização AD → Google Workspace (GCDS) preservando o fluxo MX de e-mail existente.</span><span data-en>SSO and AD → Google Workspace sync (GCDS) while preserving the existing email MX flow.</span></div>
         <div class="stack"><span class="stk">GCDS</span><span class="stk">Entra ID</span><span class="stk">Microsoft 365</span><span class="stk">Google Workspace</span><span class="stk">SAML</span><span class="stk">DNS</span></div>
       </div>
-
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Upgrade de Arquitetura · TOTVS RM</span><span data-en>Architecture Upgrade · TOTVS RM</span></span><span class="pmmeta">2026<span class="status lab"><span data-pt>EM DEV</span><span data-en>IN DEV</span></span></span></div>
+        <div class="pmd"><span data-pt>Redesenho da arquitetura do ERP TOTVS RM para upgrade, provisionado como código via Terraform (IaC).</span><span data-en>Redesign of the TOTVS RM ERP architecture for upgrade, provisioned as code via Terraform (IaC).</span></div>
+        <div class="stack"><span class="stk">TOTVS RM</span><span class="stk">Terraform</span><span class="stk">IaC</span></div>
+      </div>
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Observabilidade Zabbix + Grafana</span><span data-en>Observability Zabbix + Grafana</span></span><span class="pmmeta">2018–2026<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Implantação de monitoramento Zabbix + Grafana em três organizações (Maternidade, Kenlo e Mandic).</span><span data-en>Zabbix + Grafana monitoring deployed across three organizations (Maternidade, Kenlo and Mandic).</span></div>
+        <div class="stack"><span class="stk">Zabbix</span><span class="stk">Grafana</span><span class="stk">SNMP</span><span class="stk">Alerting</span></div>
+      </div>
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Migração de Virtualização → Hyper-V</span><span data-en>Virtualization Migration → Hyper-V</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Migração de VMware e Proxmox para Hyper-V com conversão de discos, réplicas e snapshots automáticos — incluindo o container Wareline (App/DB).</span><span data-en>Migration of VMware and Proxmox to Hyper-V with disk conversion, automated replicas and snapshots — including the Wareline (App/DB) container.</span></div>
+        <div class="stack"><span class="stk">Hyper-V</span><span class="stk">VMware</span><span class="stk">Proxmox</span><span class="stk">Replication</span><span class="stk">Snapshots</span></div>
+      </div>
+      <div class="pmini">
+        <div class="pmh"><span class="pmt">Wazuh · SIEM</span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Implantação do Wazuh (containers) para detecção de vulnerabilidades e correlação de eventos de segurança.</span><span data-en>Wazuh deployment (containers) for vulnerability detection and security event correlation.</span></div>
+        <div class="stack"><span class="stk">Wazuh</span><span class="stk">Docker</span><span class="stk">SIEM</span></div>
+      </div>
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Wi-Fi Corporativo · NPS/RADIUS</span><span data-en>Corporate Wi-Fi · NPS/RADIUS</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Autenticação do Wi-Fi corporativo integrada ao Active Directory via RADIUS, com APs FortiAP.</span><span data-en>Corporate Wi-Fi authentication integrated with Active Directory via RADIUS, using FortiAP access points.</span></div>
+        <div class="stack"><span class="stk">Windows NPS</span><span class="stk">RADIUS</span><span class="stk">Active Directory</span><span class="stk">FortiAP</span></div>
+      </div>
+    </div>
+    <div class="mini-page proj-mini-grid" data-mpage="1">
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Provisionamento de Usuários</span><span data-en>User Provisioning</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Automação da criação de usuários no AD: Forms → aprovação → Power Automate Desktop → PowerShell → AD.</span><span data-en>Automated AD user creation: Forms → approval → Power Automate Desktop → PowerShell → AD.</span></div>
+        <div class="stack"><span class="stk">Microsoft Forms</span><span class="stk">Power Automate</span><span class="stk">PAD</span><span class="stk">PowerShell</span><span class="stk">Active Directory</span></div>
+      </div>
       <div class="pmini">
         <div class="pmh"><span class="pmt"><span data-pt>Dashboard de SLA · Zabbix Services</span><span data-en>SLA Dashboard · Zabbix Services</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
         <div class="pmd"><span data-pt>Dashboard Grafana consumindo entidades Service do Zabbix para visualização consolidada de SLA.</span><span data-en>Grafana dashboard consuming Zabbix Service entities for consolidated SLA visualization.</span></div>
         <div class="stack"><span class="stk">Grafana</span><span class="stk">Zabbix Services</span><span class="stk">SLA</span></div>
       </div>
-
       <div class="pmini">
         <div class="pmh"><span class="pmt"><span data-pt>Monitoramento LVM-Thin (Proxmox)</span><span data-en>LVM-Thin Monitoring (Proxmox)</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
         <div class="pmd"><span data-pt>Script coletando uso do Thin Pool enviado ao Zabbix, evitando indisponibilidade por esgotamento de storage.</span><span data-en>Script collecting Thin Pool usage into Zabbix, preventing outages from storage exhaustion.</span></div>
         <div class="stack"><span class="stk">Proxmox</span><span class="stk">LVM</span><span class="stk">Bash</span><span class="stk">Zabbix</span></div>
       </div>
-
       <div class="pmini">
         <div class="pmh"><span class="pmt"><span data-pt>Recuperação de Ambiente Proxmox</span><span data-en>Proxmox Environment Recovery</span></span><span class="pmmeta">2025<span class="status lab">PROD/LAB</span></span></div>
         <div class="pmd"><span data-pt>Resolução de Thin Pool cheio, movimentação de VMs/CTs e expansão de armazenamento.</span><span data-en>Resolved a full Thin Pool, migrated VMs/CTs and expanded storage.</span></div>
         <div class="stack"><span class="stk">Proxmox VE</span><span class="stk">LVM</span><span class="stk">Hyper-V</span></div>
       </div>
-
       <div class="pmini">
         <div class="pmh"><span class="pmt"><span data-pt>Diagnóstico SQL Server · DMVs</span><span data-en>SQL Server Diagnostics · DMVs</span></span><span class="pmmeta">2025<span class="status prod">PROD</span></span></div>
         <div class="pmd"><span data-pt>Consultas DMV para diagnóstico de locks e desempenho, com identificação rápida de sessões bloqueadoras.</span><span data-en>DMV queries for lock and performance diagnostics, quickly identifying blocking sessions.</span></div>
         <div class="stack"><span class="stk">SQL Server</span><span class="stk">DMV</span><span class="stk">T-SQL</span></div>
       </div>
-
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>VPN OpenVPN em Container</span><span data-en>OpenVPN in Container</span></span><span class="pmmeta">2024<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Migração da VPN do pfSense para container OpenVPN, com iptables apontando para o serviço, autenticação LDAPS, tabela de roteamento e dashboard de conexões.</span><span data-en>Migrated VPN from pfSense to an OpenVPN container, with iptables routing to the service, LDAPS authentication, routing table and connections dashboard.</span></div>
+        <div class="stack"><span class="stk">OpenVPN</span><span class="stk">Docker</span><span class="stk">iptables</span><span class="stk">LDAPS</span><span class="stk">Routing</span></div>
+      </div>
+    </div>
+    <div class="mini-page proj-mini-grid" data-mpage="2">
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>GLPI · Gestão de Ativos</span><span data-en>GLPI · Asset Management</span></span><span class="pmmeta">2022–2024<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Implantação do GLPI para inventário, gestão de ativos de TI e central de chamados na Kenlo.</span><span data-en>GLPI deployment for inventory, IT asset management and service desk at Kenlo.</span></div>
+        <div class="stack"><span class="stk">GLPI</span><span class="stk">ITSM</span><span class="stk">MySQL</span></div>
+      </div>
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Migração de Firewall · ISA → Sophos</span><span data-en>Firewall Migration · ISA → Sophos</span></span><span class="pmmeta">2018–2021<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Migração do ISA Server 2008 para Sophos, recriando regras de VPN, túneis, roteamento, NAT e Web Filter.</span><span data-en>Migrated ISA Server 2008 to Sophos, rebuilding VPN rules, tunnels, routing, NAT and Web Filter.</span></div>
+        <div class="stack"><span class="stk">Sophos</span><span class="stk">VPN</span><span class="stk">NAT</span><span class="stk">Routing</span><span class="stk">Web Filter</span></div>
+      </div>
+      <div class="pmini">
+        <div class="pmh"><span class="pmt"><span data-pt>Kaspersky · Endpoint & AV</span><span data-en>Kaspersky · Endpoint & AV</span></span><span class="pmmeta">2018–2021<span class="status prod">PROD</span></span></div>
+        <div class="pmd"><span data-pt>Implantação do Kaspersky como AV em todo o ambiente, com políticas de patch de terceiros, proxy, firewall e demais recursos da plataforma.</span><span data-en>Deployed Kaspersky as the environment-wide AV, with third-party patch policies, proxy, firewall and the full platform feature set.</span></div>
+        <div class="stack"><span class="stk">Kaspersky</span><span class="stk">Endpoint</span><span class="stk">Patch Mgmt</span><span class="stk">Proxy</span><span class="stk">Firewall</span></div>
+      </div>
+    </div>
+    </div>
+    <div class="carousel-nav">
+      <button id="miniPrev" onclick="miniGo(-1)" aria-label="prev">&#8592;</button>
+      <span class="carousel-dots" id="miniDots"></span>
+      <span class="carousel-ind" id="miniInd">1 / 3</span>
+      <button id="miniNext" onclick="miniGo(1)" aria-label="next">&#8594;</button>
     </div>
   </section>
 
@@ -599,6 +658,42 @@
       raf=requestAnimationFrame(draw);
     }
     rz();draw();addEventListener('resize',()=>{cancelAnimationFrame(raf);rz();draw();});
+  })();
+
+
+  // per-card tag pagination (~5-6 lines per page)
+  (function(){
+    document.querySelectorAll('.skill-card').forEach(function(card){
+      var tags=card.querySelector('.tags'); if(!tags) return;
+      var items=Array.prototype.slice.call(tags.children).filter(function(el){return el.classList.contains('tag');});
+      var max=14;
+      if(items.length<=max) return;
+      var pageCount=Math.ceil(items.length/max);
+      var per=Math.ceil(items.length/pageCount);
+      var cur=0;
+      var nav=document.createElement('div'); nav.className='tag-dots';
+      for(var p=0;p<pageCount;p++){ var d=document.createElement('i'); d.dataset.p=p; d.onclick=function(){cur=+this.dataset.p;render();}; nav.appendChild(d);}
+      tags.insertAdjacentElement('afterend', nav);
+      function render(){
+        items.forEach(function(it,i){ it.style.display=(Math.floor(i/per)===cur)?'':'none'; });
+        nav.querySelectorAll('i').forEach(function(d,i){ d.classList.toggle('on', i===cur); });
+      }
+      render();
+    });
+  })();
+
+  // mini projects carousel
+  (function(){
+    var mp=0; var pages=document.querySelectorAll('.mini-page'); var tot=pages.length;
+    var dots=document.getElementById('miniDots');
+    if(dots){ for(var i=0;i<tot;i++){ var d=document.createElement('i'); d.dataset.i=i; d.onclick=function(){mp=+this.dataset.i;render();}; dots.appendChild(d);} }
+    window.miniGo=function(dir){ mp=(mp+dir+tot)%tot; render(); };
+    function render(){
+      pages.forEach(function(p,i){ p.classList.toggle('active', i===mp); });
+      var ind=document.getElementById('miniInd'); if(ind) ind.textContent=(mp+1)+' / '+tot;
+      if(dots) dots.querySelectorAll('i').forEach(function(d,i){ d.classList.toggle('on', i===mp); });
+    }
+    render();
   })();
 
   let saved='pt'; try{saved=localStorage.getItem('cvlang2')||'pt'}catch(e){}
